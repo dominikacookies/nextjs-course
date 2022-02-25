@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import MeetupList from "../components/meetups/MeetupList";
 
 const DUMMY_MEETUP = [
@@ -19,8 +20,33 @@ const DUMMY_MEETUP = [
   },
 ];
 
-const HomePage = () => {
-  return <MeetupList meetups={DUMMY_MEETUP} />;
+const HomePage = ({ meetups }) => {
+  return <MeetupList meetups={meetups} />;
 };
+
+//runs for every incoming request
+// use for data that changes super frequently
+// export async function getServerSideProps(context) {
+//   //accessing req for the incoming request
+//   const req = context.req;
+
+//   return {
+//     props: {
+//       meetups: DUMMY_MEETUP,
+//     },
+//   };
+// }
+
+//runs at build time, revalidate sets every how many seconds the data should refresh
+// use for data that does not change as frequently
+// this is faster than getServerSideProps
+export async function getStaticProps() {
+  return {
+    props: {
+      meetups: DUMMY_MEETUP,
+    },
+    revalidate: 10,
+  };
+}
 
 export default HomePage;
