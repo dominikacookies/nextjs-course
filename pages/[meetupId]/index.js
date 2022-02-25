@@ -14,6 +14,10 @@ const MeetupDetails = ({ meetupData }) => {
 //Next js must know for which id values to pre-generate the page
 export async function getStaticPaths() {
   return {
+    // if fallback is false the user can only access pages with the defined ids below
+    // if true and id provided is not defined below, the page will be dynamically generated
+    // this allows you to pre-generate the most popular pages only
+    fallback: false,
     paths: [
       {
         params: {
